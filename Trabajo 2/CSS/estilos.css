@@ -1,0 +1,51 @@
+
+/* Estilos básicos */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('https://www.designfootball.com/images/joomgallery/originals/football_crests_8/barcelona_sc_20221101_1918906536.png');
+    background-size: cover; /* Ajusta automáticamente la imagen de fondo */
+    background-position: center;
+    min-height: 100vh; /* Establece la altura mínima del cuerpo al 100% del viewport height */
+    display: flex;
+    flex-direction: column; /* Establece la disposición de los elementos hijos en columna */
+    position: relative; /* Establece el cuerpo como un elemento relativo */
+}
+
+footer {
+    position: absolute; /* Establece el pie de página como un elemento absoluto */
+    bottom: 0; /* Coloca el pie de página en la parte inferior */
+    width: 100%; /* Asegura que el pie de página ocupe todo el ancho */
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+}
+
+.social-icons {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0; /* Ajusta el margen arriba para separarlo del texto adicional */
+}
+
+.social-icons li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.social-icons li img {
+    width: 30px;
+    height: 30px;
+}
+
+.content {
+    text-align: center; /* Centra el contenido */
+    color: rgb(0, 0, 0); /* Color negro */
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
+    background: none; /* Elimina el fondo del logo */
+}
