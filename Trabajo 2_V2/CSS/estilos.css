@@ -1,0 +1,211 @@
+/* Estilos básicos */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('https://www.designfootball.com/images/joomgallery/originals/football_crests_8/barcelona_sc_20221101_1918906536.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Contenedor principal para el header */
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: rgba(128, 128, 128, 0.7);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Estilo para el logo */
+.logo {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Estilo para el slogan */
+.slogan {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    color: yellow;
+    font-style: italic;
+    margin-left: 20px;
+    flex: 1;
+}
+
+/* Estilo para la navegación */
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    color: grey;
+}
+
+/* Estilos adicionales para el contenido */
+.content {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    flex: 1;
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.welcome {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 36px;
+    color: white;
+}
+
+/* Estilo para la sección de imágenes */
+.images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.images img {
+    max-width: 50%;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Estilo para las imágenes de la sección "Nuestros Servicios" */
+.uniform-img {
+    width: 400px; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+    display: block;
+    margin: 10px auto; /* Centrará las imágenes horizontalmente */
+}
+
+/* Estilo para el contenedor de las descripciones de productos */
+.product-description {
+    background-color: rgba(128, 128, 128, 0.7); /* Fondo gris translúcido */
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Alineación del texto a la izquierda */
+}
+
+/* Fuentes estilizadas para las descripciones */
+.product-description strong {
+    font-family: 'Georgia', serif;
+    font-size: 22px;
+}
+
+.product-description p {
+    font-family: 'Verdana', sans-serif;
+    font-size: 18px;
+}
+
+/* Estilo para la sección "Quiénes Somos" */
+.quienes-somos-content {
+    padding: 20px;
+    background-color: rgba(128, 128, 128, 0.7);
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+/* Estilos para el footer */
+footer {
+    width: 100%;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+}
+
+.social-icons {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0;
+}
+
+.social-icons li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.social-icons li img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Estilos para el formulario de contacto */
+.contact-container {
+    background-color: rgba(128, 128, 128, 0.7); /* Fondo gris translúcido */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto; /* Centrar el contenedor horizontalmente */
+    text-align: left; /* Alinear el texto a la izquierda */
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    font-family: 'Verdana', sans-serif;
+    font-size: 16px;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.contact-form input {
+    width: calc(100% - 20px); /* Ajustar el ancho para el padding */
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.contact-form button {
+    background-color: yellow;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    align-self: flex-start;
+}
+
+.contact-form button:hover {
+    background-color: darkorange;
+}
+
+.contact-info {
+    margin-top: 20px;
+    color: white;
+    font-family: 'Verdana', sans-serif;
+    font-size: 16px;
+}
