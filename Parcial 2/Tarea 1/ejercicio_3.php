@@ -1,141 +1,89 @@
 <?php
-declare(strict_types=1); // Activa el modo estricto de tipos para mayor seguridad en PHP.
+declare(strict_types=1); // Activa el tipado estricto: obliga a usar los tipos correctos
 
-// Definición de una clase abstracta para polinomios
+// Clase abstracta que define lo mínimo que debe tener una clase de polinomios
 abstract class PolinomioAbstracto {
-    // Método abstracto que debe implementar cualquier subclase
-    // Evalúa el polinomio en el valor x.
+    // Método que permite evaluar el polinomio en un valor de x
     abstract public function evaluar(float $x): float;
 
-    // Método abstracto que debe implementar cualquier subclase
-    // Devuelve un nuevo polinomio que representa la derivada.
-    abstract public function derivada(): Polinomio;
+    // Método que devuelve la derivada del polinomio como otro array asociativo
+    abstract public function derivada(): array;
 }
 
-// Clase concreta que implementa PolinomioAbstracto
+// Clase concreta que representa un polinomio y hereda de PolinomioAbstracto
 class Polinomio extends PolinomioAbstracto {
-    // Almacena los términos del polinomio como [grado => coeficiente]
-    private array $terminos;
+    private array $terminos; // Almacena el polinomio: [grado => coeficiente]
 
-    // Constructor: recibe opcionalmente un arreglo de términos
-    public function __construct(array $terminos = []) {
+    // Constructor: recibe un array asociativo y lo guarda en la propiedad $terminos
+    public function __construct(array $terminos) {
         $this->terminos = $terminos;
     }
 
-    // Devuelve el arreglo de términos del polinomio
-    public function getTerminos(): array {
-        return $this->terminos;
-    }
-
-    // Evalúa el polinomio en un valor x
+    // Evalúa el polinomio en un valor específico de x
     public function evaluar(float $x): float {
         $resultado = 0.0;
 
-        // Para cada término (grado, coeficiente), calcula coeficiente * x^grado
-        foreach ($this->terminos as $grado => $coeficiente) {
-            $resultado += $coeficiente * ($x ** $grado);
+        // Recorremos cada término y aplicamos: coeficiente * x^grado
+        foreach ($this->terminos as $grado => $coef) {
+            $resultado += $coef * pow($x, (int)$grado);
         }
-        return $resultado;
+
+        return $resultado; // Devolvemos el resultado final
     }
 
-    // Calcula y devuelve la derivada del polinomio como un nuevo objeto Polinomio
-    public function derivada(): Polinomio {
+    // Calcula la derivada del polinomio (regla de potencia: n*a*x^(n-1))
+    public function derivada(): array {
         $derivada = [];
 
-        // Derivar: la derivada de a*x^n es n*a*x^(n-1)
-        foreach ($this->terminos as $grado => $coeficiente) {
-            if ($grado > 0) {
-                $derivada[$grado - 1] = $coeficiente * $grado;
+        // Solo derivamos términos con grado mayor a 0
+        foreach ($this->terminos as $grado => $coef) {
+            if ((int)$grado > 0) {
+                $nuevoGrado = (int)$grado - 1;
+                $nuevoCoef = (int)$grado * $coef;
+                $derivada[$nuevoGrado] = $nuevoCoef;
             }
         }
-        return new Polinomio($derivada);
+
+        return $derivada; // Devuelve la derivada como nuevo array
+    }
+
+    // Método estático: suma dos polinomios representados como arrays asociativos
+    public static function sumarPolinomios(array $p1, array $p2): array {
+        $suma = $p1;
+
+        // Recorremos cada término de $p2 y lo sumamos al término correspondiente en $p1
+        foreach ($p2 as $grado => $coef) {
+            if (isset($suma[$grado])) {
+                $suma[$grado] += $coef;
+            } else {
+                $suma[$grado] = $coef;
+            }
+        }
+
+        // Ordenamos el array de mayor a menor grado para mejor presentación
+        krsort($suma);
+        return $suma;
     }
 }
 
-// Función que suma dos polinomios representados como arreglos [grado => coeficiente]
-function sumarPolinomios(array $p1, array $p2): array {
-    $resultado = $p1;
+// 🔽 PRUEBA DEL FUNCIONAMIENTO DEL POLINOMIO 🔽
 
-    // Para cada término en el segundo polinomio
-    foreach ($p2 as $grado => $coeficiente) {
-        if (isset($resultado[$grado])) {
-            // Si ya existe el grado, se suman los coeficientes
-            $resultado[$grado] += $coeficiente;
-        } else {
-            // Si no existe, se añade el nuevo término
-            $resultado[$grado] = $coeficiente;
-        }
-    }
+// Definimos dos polinomios como arrays asociativos
+$p1 = [2 => 3, 1 => 4, 0 => 2]; // Representa: 3x² + 4x + 2
+$p2 = [2 => 1, 1 => -1, 0 => 3]; // Representa: 1x² - x + 3
 
-    // Eliminar términos cuyo coeficiente sea prácticamente cero
-    foreach ($resultado as $grado => $coef) {
-        if (abs($coef) < 1e-10) {
-            unset($resultado[$grado]);
-        }
-    }
+// Creamos instancias de la clase Polinomio con los arrays
+$polinomio1 = new Polinomio($p1);
 
-    // Ordenar por grado ascendente
-    ksort($resultado);
-    return $resultado;
-}
+// Evaluamos el primer polinomio en x = 2
+echo "Evaluación de p1 en x = 2: " . $polinomio1->evaluar(2.0) . "\n";
 
-// Función para leer un polinomio desde la entrada del usuario
-// Ejemplo de entrada esperada: 3x^0 + 4x^1 - 5x^2
-function leerPolinomio(): array {
-    $entrada = readline("Ingresa un polinomio (ejemplo: 3x^0 + 4x^1 - 5x^2): ");
-    $terminos = [];
+// Mostramos la derivada de p1
+echo "Derivada de p1:\n";
+print_r($polinomio1->derivada());
 
-    // Busca todas las coincidencias de términos con patrón coeficiente x^grado
-    preg_match_all('/([-+]?\s*\d*\.?\d*)x\^(\d+)/', $entrada, $coincidencias, PREG_SET_ORDER);
+// Sumamos los dos polinomios usando el método estático
+echo "Suma de p1 y p2:\n";
+print_r(Polinomio::sumarPolinomios($p1, $p2));
 
-    foreach ($coincidencias as $coincidencia) {
-        $coef = trim(str_replace(' ', '', $coincidencia[1]));
-        $grado = (int) $coincidencia[2];
-
-        // Interpretar coeficientes:
-        // Si no hay número explícito, se asume 1 o -1
-        if ($coef === '+' || $coef === '') {
-            $coef = 1.0;
-        } elseif ($coef === '-') {
-            $coef = -1.0;
-        } else {
-            $coef = floatval($coef);
-        }
-
-        // Guardar el coeficiente con su respectivo grado
-        $terminos[$grado] = $coef;
-    }
-    return $terminos;
-}
-
-// Comienza el programa principal
-echo "Manejo de polinomios\n";
-
-echo "Primer polinomio:\n";
-// Leer el primer polinomio del usuario
-$p1 = new Polinomio(leerPolinomio());
-
-echo "Segundo polinomio:\n";
-// Leer el segundo polinomio del usuario
-$p2 = new Polinomio(leerPolinomio());
-
-// Leer el valor de x para evaluar los polinomios
-$xEval = floatval(readline("Ingresa el valor de x para evaluar los polinomios: "));
-
-// Sumar los dos polinomios y crear un nuevo objeto Polinomio con el resultado
-$suma = sumarPolinomios($p1->getTerminos(), $p2->getTerminos());
-$polinomioSuma = new Polinomio($suma);
-
-echo "\nResultados:\n";
-// Mostrar evaluación del primer polinomio en x
-echo "Evaluar primer polinomio en x = $xEval: " . $p1->evaluar($xEval) . "\n";
-
-// Mostrar evaluación del segundo polinomio en x
-echo "Evaluar segundo polinomio en x = $xEval: " . $p2->evaluar($xEval) . "\n";
-
-// Mostrar evaluación de la suma de ambos polinomios en x
-echo "Evaluar suma de polinomios en x = $xEval: " . $polinomioSuma->evaluar($xEval) . "\n";
-
-// Calcular y mostrar la derivada del primer polinomio evaluada en x
-$derivadaP1 = $p1->derivada();
-echo "Derivada del primer polinomio evaluada en x = $xEval: " . $derivadaP1->evaluar($xEval) . "\n";
+?>
